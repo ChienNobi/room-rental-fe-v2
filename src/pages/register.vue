@@ -13,7 +13,7 @@ import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
 import { useGenerateImageVariant } from '@core/composable/useGenerateImageVariant'
 import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
 import { themeConfig } from '@themeConfig'
-import { emailValidator, requiredValidator } from '@validators'
+import { emailValidator, phoneNumberValidator, requiredValidator } from '@validators'
 import { register } from '@/api/auth'
 import { HTTP_STATUS } from '@/constants/common'
 import { useSnackbar } from '@core/components/Snackbar/useSnackbar'
@@ -23,6 +23,8 @@ const registerData = reactive({
   email: '',
   password: '',
   rePassword: '',
+  phone: '',
+  address: '',
   avt: '',
   privacyPolicies: false,
 })
@@ -100,9 +102,6 @@ const onSubmit = async (validate: SubmitEventPromise) => {
           <h5 class="text-h5 font-weight-semibold mb-1">
             Adventure starts here 🚀
           </h5>
-          <p class="mb-0">
-            Make your app management easy and fun!
-          </p>
         </VCardText>
 
         <VCardText>
@@ -119,6 +118,24 @@ const onSubmit = async (validate: SubmitEventPromise) => {
               v-model="registerData.name"
               :rules="[requiredValidator]"
               label="Enter your name"
+              :hide-details="false"
+              class="mb-3"
+            />
+
+            <!-- phone number -->
+            <VTextField
+              v-model="registerData.phone"
+              :rules="[requiredValidator, phoneNumberValidator]"
+              label="Phone number"
+              :hide-details="false"
+              class="mb-3"
+            />
+
+            <!-- phone number -->
+            <VTextarea
+              v-model="registerData.address"
+              :rules="[requiredValidator]"
+              label="Address"
               :hide-details="false"
               class="mb-3"
             />

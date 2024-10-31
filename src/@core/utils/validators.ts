@@ -122,3 +122,8 @@ export const alphaDashValidator = (value: unknown) => {
 
   return /^[0-9A-Z_-]*$/i.test(valueAsString) || 'All Character are not valid'
 }
+
+// 👉 Numeric Validator
+export const phoneNumberValidator = (phone: string) => {
+  return /(03|05|07|08|09|01[2|689])+([0-9]{8})\b/.test(phone) || 'Phone number is invalid'
+}
