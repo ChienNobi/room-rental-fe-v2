@@ -1,61 +1,50 @@
 {
   "router": {
-    "finance": "Finance Management"
+    "finance": "Quản Lý Tài Chính"
   },
-  "finance": {
-    "overview": "Overview",
-    "my_wallet": "My wallet",
-    "recent_transaction": "Recent Transaction",
-    "transaction": "Transaction List",
-    "transaction_add": "Transaction Add",
-    "wallet_category": "Wallet & Category",
-    "top_spending": "Top Spending By Transaction",
-    "spending_by_category": "Category Spending",
-    "spending_chart": "Spending Chart",
-    "note": "Note",
-    "image": "Image",
-    "exclude_report": "Exclude from report",
-    "transaction_add_title": "Add a new transaction"
-  },
-  "task": {
-    "heading": "Task & Calendar",
-    "title": "Title",
-    "label": "Label",
-    "kanban": "Kanban Board"
-  },
-  "see_all": "See all",
-  "balance": "Total balance",
-  "spending": "Total spending",
-  "incoming": "Total incoming",
+  "see_all": "Xem Tất Cả",
+  "balance": "Tổng Số Dư",
+  "spending": "Tổng Chi Tiêu",
+  "incoming": "Tổng Thu Nhập",
   "btn": {
-    "submit": "Submit",
-    "save": "Save",
-    "cancel": "Cancel",
-    "edit": "Edit",
-    "detail": "Detail",
-    "login": "Login"
+    "submit": "Gửi",
+    "save": "Lưu",
+    "cancel": "Hủy",
+    "edit": "Chỉnh Sửa",
+    "detail": "Chi Tiết",
+    "login": "Đăng Nhập",
+    "home": "Trang Chủ",
+    "view_transaction": "Xem Giao Dịch",
+    "delete": "Xóa"
   },
   "common": {
-    "category": "Category",
-    "amount": "Amount",
-    "wallet": "Wallet",
-    "note": "Note",
-    "name_wallet": "Name/Wallet",
-    "action": "Action",
-    "date": "Date"
+    "category": "Danh Mục",
+    "amount": "Số Tiền",
+    "wallet": "Ví",
+    "note": "Ghi Chú",
+    "name_wallet": "Ví",
+    "action": "Hành Động",
+    "date": "Ngày"
   },
   "message": {
-    "login_success": "Login successfully",
-    "logout_success": "Logout successfully",
+    "login_success": "Đăng nhập thành công",
+    "logout_success": "Đăng xuất thành công",
     "register_success": "Tạo tài khoản thành công. Vui lòng kiểm tra email để kích hoạt tài khoản",
-    "unauthorized": "Email or password is incorrect",
-    "exception": "There is an error, please try again",
-    "invalid_link": "Your link you have provided is not valid, please check again or go to Home to continue."
+    "unauthorized": "Email hoặc mật khẩu không đúng",
+    "exception": "Có lỗi xảy ra, vui lòng thử lại",
+    "invalid_link": "Liên kết bạn cung cấp không hợp lệ, vui lòng kiểm tra lại hoặc vào Trang Chủ để tiếp tục."
   },
   "active_account": {
-    "not_match_type": "The provided token does not match the expected type.",
-    "not_match_user": "The provided token does not match current user.",
-    "token_expired": "The token has expired. Please login to re-send activation link",
-    "invalid_token": "The token is invalid."
-  }
+    "not_match_type": "Token được cung cấp không khớp",
+    "not_match_user": "Token được cung cấp không khớp với người dùng hiện tại.",
+    "token_expired": "Token đã hết hạn. Vui lòng đăng nhập để gửi lại liên kết kích hoạt",
+    "invalid_token": "Token không hợp lệ."
+  },
+  "validation": {
+    "required": "Trường này là bắt buộc",
+    "email": "Email không hợp lệ",
+    "integer": "Trường này phải là một số nguyên"
+  },
+  "sign_up": "Đăng Ký",
+  "icon": "Biểu Tượng"
 }

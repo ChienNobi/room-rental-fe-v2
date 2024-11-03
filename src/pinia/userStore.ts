@@ -8,6 +8,7 @@ interface UserInfo {
   email: string
   avt?: string
   role?: string
+  phone: string
   id: number
 }
 

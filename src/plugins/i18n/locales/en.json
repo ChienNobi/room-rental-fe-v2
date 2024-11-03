@@ -2,27 +2,6 @@
   "router": {
     "finance": "Finance Management"
   },
-  "finance": {
-    "overview": "Overview",
-    "my_wallet": "My wallet",
-    "recent_transaction": "Recent Transaction",
-    "transaction": "Transaction List",
-    "transaction_add": "Transaction Add",
-    "wallet_category": "Wallet & Category",
-    "top_spending": "Top Spending By Transaction",
-    "spending_by_category": "Category Spending",
-    "spending_chart": "Spending Chart",
-    "note": "Note",
-    "image": "Image",
-    "exclude_report": "Exclude from report",
-    "transaction_add_title": "Add a new transaction"
-  },
-  "task": {
-    "heading": "Task & Calendar",
-    "title": "Title",
-    "label": "Label",
-    "kanban": "Kanban Board"
-  },
   "see_all": "See all",
   "balance": "Total balance",
   "spending": "Total spending",
@@ -67,33 +46,5 @@
     "integer": "This field must be an integer"
   },
   "sign_up": "Sign up",
-  "icon": "icon",
-  "category": {
-    "add_title": "Add a new category",
-    "edit_title": "Edit category",
-    "name": "Category name",
-    "type": "Category type",
-    "parent": "Parent category",
-    "income": "Income",
-    "expense": "Expense",
-    "add": "Add category",
-    "add_success": "Add category successfully",
-    "edit_success": "Edit category successfully"
-  },
-  "wallet": {
-    "add_title": "Add a new wallet",
-    "edit_title": "Edit wallet",
-    "name": "Wallet name",
-    "balance": "Balance",
-    "description": "Description",
-    "add": "Add wallet",
-    "add_success": "Add new wallet successfully",
-    "edit_success": "Edit wallet successfully",
-    "total": "Total"
-  },
-  "transaction": {
-    "edit_title": "Edit transaction",
-    "add_success": "Add transaction successfully",
-    "edit_success": "Edit transaction successfully"
-  }
+  "icon": "icon"
 }

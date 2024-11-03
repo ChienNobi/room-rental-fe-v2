@@ -10,8 +10,8 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: to => {
-        return { name: 'finance-management-overview' }
+      redirect: _ => {
+        return { name: 'post' }
       },
     },
     {
@@ -26,7 +26,6 @@ const router = createRouter({
   ],
 })
 
-// Docs: https://router.vuejs.org/guide/advanced/navigation-guards.html#global-before-guards
 router.beforeEach(async (to, _, next) => {
   const isLoggedIn = isUserLoggedIn()
   const { useUserStore } = await import('@/pinia/userStore')

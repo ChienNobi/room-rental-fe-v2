@@ -1,18 +1,3 @@
-export const CategoryIcon = [
-  'cate-breakfast',
-  'cate-car-service',
-  'cate-lunch',
-  'cate-electricity',
-  'cate-food',
-  'cate-fuel',
-  'cate-internet',
-  'cate-pets',
-  'cate-shopping',
-  'cate-study',
-  'cate-travel',
-  'cate-water',
-] as const
-
 export const TASK_PRIORITY = {
   LOW: {
     color: 'primary',
@@ -42,29 +27,45 @@ export const HTTP_STATUS = {
   VALIDATION_ERR: 422,
 }
 
-export const CATEGORY_TYPE: Record<string, Record<string, string>> = {
-  DEBT: {
-    value: 'DEBT',
-    label: 'Debt',
-    icon: 'tabler-minus',
-    color: 'error',
+export const ROOM_TYPES = [
+  {
+    title: 'Phòng trọ',
+    value: 'MOTEL',
   },
-  SALARY: {
-    value: 'SALARY',
-    label: 'Salary',
-    icon: 'tabler-plus',
-    color: 'success',
+  {
+    title: 'Chung cư',
+    value: 'APARTMENT',
   },
-  INCOME: {
-    value: 'INCOME',
-    label: 'Income',
-    color: 'success',
-    icon: 'tabler-plus',
+  {
+    title: 'Nhà nguyên căn',
+    value: 'HOUSE',
   },
-  EXPENSE: {
-    value: 'EXPENSE',
-    label: 'Expense',
-    icon: 'tabler-minus',
-    color: 'error',
+  {
+    title: 'Văn phòng',
+    value: 'OFFICE',
   },
+]
+
+export const FURNITURE_TYPES = [
+  {
+    title: 'Không có',
+    value: 'NONE',
+  },
+  {
+    title: 'Cơ bản',
+    value: 'BASIC',
+  },
+  {
+    title: 'Đầy đủ',
+    value: 'FULL',
+  },
+]
+
+export const POST_STATUSES = {
+  PENDING: 'PENDING',
+  PUBLISH: 'PUBLISH',
+  DRAFT: 'DRAFT',
+  REJECTED: 'REJECTED',
 }
+
+export type PostStatus = keyof typeof POST_STATUSES
