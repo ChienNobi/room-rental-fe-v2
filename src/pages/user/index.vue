@@ -1,46 +1,29 @@
 <script lang="ts" setup>
-import { walletsApi } from '@/api/wallets.api'
-import { categoriesApi } from '@/api/categories.api'
-import { transactionApi } from '@/api/transactions.api'
-import { formatDate } from '@core/utils/formatters'
+import { formatCurrency, formatDate } from '@core/utils/formatters'
+import { postApi } from '@/api/post.api'
+import { POST_STATUS_COLORS, POST_STATUS_TEXTS } from '@/constants/common'
+import { requiredValidator } from '@validators'
 
-const wallets = ref([])
-const categories = ref([])
 const transactions = ref([])
 const { t } = useI18n()
 const router = useRouter()
 
 const formData = reactive({
-  category_id: '',
-  wallet_id: '',
-  start_date: '',
-  end_date: '',
   page: 1,
   limit: 10,
+  status: '',
 })
 
 const headers = [
-  { title: t('common.name_wallet'), align: 'start', key: 'wallet.name' },
-  { title: t('common.category'), align: 'center', key: 'category.name' },
-  { title: t('common.amount'), align: 'center', key: 'amount' },
-  { title: t('common.date'), align: 'center', key: 'action_time', value: item => formatDate(item.action_time) },
+  { title: 'Id', align: 'start', key: 'id' },
+  { title: 'Họ và tên', align: 'center', key: 'title' },
+  { title: 'Trạng thái', align: 'center', key: 'status' },
+  { title: 'Role', align: 'center', key: 'created_at' },
   { title: t('common.action'), align: 'center', key: 'action' },
 ]
 
-const getOptions = async () => {
-  try {
-    const [walletRes, categoryRes] = await Promise.all([walletsApi.getOptions(), categoriesApi.getOptions()])
-
-    wallets.value = walletRes?.data?.items || []
-    categories.value = categoryRes?.data?.items || []
-  }
-  catch (e) {
-    console.log(e)
-  }
-}
-
 const getList = async () => {
-  const result = await transactionApi.get({ ...formData })
+  const result = await postApi.get({ ...formData })
 
   transactions.value = result.data.data ?? []
 }
@@ -50,59 +33,59 @@ const onLimitChange = (limit: number) => {
   getList()
 }
 
-getOptions()
-getList()
+// getList()
 </script>
 
 <template>
-  <VCard title="Transaction List">
+  <VCard title="Danh sách user">
     <template #append>
-      <VBtn prepend-icon="tabler-plus" :to="{ name: 'finance-management-transaction-add' }">Add New</VBtn>
+      <VBtn prepend-icon="tabler-plus" :to="{ name: 'user-add' }">Thêm mới</VBtn>
     </template>
     <VDivider />
 
     <VCardText>
       <VRow class="mb-3">
-        <VCol :md="2" :sm="12">
+        <VCol :md="4" :sm="12">
+          <VTextField
+            v-model="formData.name"
+            label="Họ và tên"
+            placeholder=""
+          />
+        </VCol>
+        <VCol :md="4" :sm="12">
           <VSelect
-            v-model="formData.category_id"
+            v-model="formData.status"
             density="compact"
             variant="outlined"
-            :label="$t('common.category')"
-            item-title="name"
-            item-value="id"
-            :items="categories"
+            label="Trạng thái"
+            item-title="text"
+            item-value="status"
+            :items="POST_STATUS_TEXTS"
             clearable
           />
         </VCol>
-        <VCol :md="2" :sm="12">
-          <VSelect
-            v-model="formData.wallet_id"
-            density="compact"
-            variant="outlined"
-            :label="$t('common.wallet')"
-            item-title="name"
-            item-value="id"
-            :items="wallets"
-            clearable
-          />
-        </VCol>
-        <VCol :md="2" :sm="12">
-          <Calendar v-model:datetime="formData.start_date" label="Start Date" />
-        </VCol>
-        <VCol :md="2" :sm="12">
-          <Calendar v-model:datetime="formData.end_date" label="End Date" />
-        </VCol>
+
         <VCol :md="2" :sm="12">
           <VBtn prepend-icon="tabler-search" @click="getList">Search</VBtn>
         </VCol>
       </VRow>
 
       <VDataTable :headers="headers" :items="transactions" @update:items-per-page="onLimitChange">
+        <template #item.created_at="{ item }">{{ formatDate(item.created_at) }}</template>
+        <template #item.status="{ item }">
+          <VChip
+            class="me-3"
+            :color="POST_STATUS_COLORS[item.status]"
+            size="small"
+          >
+            {{ item.status }}
+          </VChip>
+        </template>
+
         <template #item.action="{ item }">
           <VBtn
             color="primary" size="x-small" prepend-icon="tabler-pencil"
-            @click="router.push({ name: 'finance-management-transaction-edit', params: { id: item.id } })"
+            @click="router.push({ name: 'post-edit', params: { id: item.id } })"
           >
             {{ t('btn.edit') }}
           </VBtn>
@@ -121,17 +104,16 @@ getList()
             <template #default="{ isActive }">
               <VCard title="Confirm">
                 <VCardText>
-                  Do you want to delete this item?
+                  Bạn có muốn xóa bài đăng này không?
                 </VCardText>
 
                 <VCardActions>
                   <VSpacer />
-
                   <VBtn
                     color="error"
                     variant="tonal"
                     @click="() => {
-                      transactionApi.delete(item.id)
+                      postApi.delete(item.id)
                       getList()
                       isActive.value = false
                     }"

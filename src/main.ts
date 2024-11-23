@@ -11,6 +11,8 @@ import '@styles/styles.scss'
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
 
+// import cloudinary from '@/plugins/cloudinary'
+
 loadFonts()
 
 const app = createApp(App)
@@ -20,5 +22,7 @@ app.use(createPinia())
 app.use(router)
 app.use(layoutsPlugin)
 app.use(i18n)
+
+// app.use(cloudinary)
 
 app.mount('#app')

@@ -14,7 +14,7 @@ const simpleStatisticsDemoCards = [
   {
     icon: 'tabler-currency-dollar',
     color: 'error',
-    title: 'Total Profit',
+    title: 'Doanh số tháng này',
     subTitle: 'Last week',
     stat: '1.28k',
     change: '-12.2%',
@@ -22,10 +22,9 @@ const simpleStatisticsDemoCards = [
   {
     icon: 'tabler-chart-bar',
     color: 'info',
-    title: 'Total Sales',
+    title: 'Tổng số bài viết',
     subTitle: 'Last week',
-    stat: '$4,673',
-    change: '+25.2%',
+    stat: '12',
   },
 ]
 </script>
@@ -41,14 +40,14 @@ const simpleStatisticsDemoCards = [
       <CrmSalesAreaCharts />
     </VCol>
 
-    <VCol
-      cols="12"
-      md="4"
-      sm="6"
-      lg="2"
-    >
-      <CrmSessionsBarWithGapCharts />
-    </VCol>
+    <!--    <VCol -->
+    <!--      cols="12" -->
+    <!--      md="4" -->
+    <!--      sm="6" -->
+    <!--      lg="2" -->
+    <!--    > -->
+    <!--      <CrmSessionsBarWithGapCharts /> -->
+    <!--    </VCol> -->
 
     <VCol
       v-for="demo in simpleStatisticsDemoCards"
@@ -78,79 +77,41 @@ const simpleStatisticsDemoCards = [
           <p class="my-2">
             {{ demo.stat }}
           </p>
-          <VChip
-            :color="demo.color"
-            label
-          >
-            {{ demo.change }}
-          </VChip>
         </VCardText>
       </VCard>
     </VCol>
 
     <!-- 👉 Revenue Growth -->
-    <VCol
-      cols="12"
-      md="8"
-      lg="4"
-    >
-      <CrmRevenueGrowth />
-    </VCol>
+    <!--    <VCol -->
+    <!--      cols="12" -->
+    <!--      md="8" -->
+    <!--      lg="4" -->
+    <!--    > -->
+    <!--      <CrmRevenueGrowth /> -->
+    <!--    </VCol> -->
 
     <!-- 👉 Earning Reports -->
-    <VCol
-      cols="12"
-      md="8"
-    >
-      <CrmEarningReportsYearlyOverview />
-    </VCol>
+    <!--    <VCol -->
+    <!--      cols="12" -->
+    <!--      md="8" -->
+    <!--    > -->
+    <!--      <CrmEarningReportsYearlyOverview /> -->
+    <!--    </VCol> -->
 
     <!-- 👉 Sales -->
-    <VCol
-      cols="12"
-      md="4"
-    >
-      <CrmAnalyticsSales />
-    </VCol>
-
-    <!-- 👉 Browser States -->
-    <VCol
-      cols="12"
-      md="4"
-    >
-      <CrmBrowserStates />
-    </VCol>
-
-    <!-- 👉 Project Status -->
-    <VCol
-      cols="12"
-      md="4"
-    >
-      <CrmProjectStatus />
-    </VCol>
-
-    <!-- 👉 Active Project -->
-    <VCol
-      cols="12"
-      md="4"
-    >
-      <CrmActiveProject />
-    </VCol>
-
-    <!-- 👉 Recent Transaction -->
-    <VCol
-      cols="12"
-      md="6"
-    >
-      <CrmRecentTransaction />
-    </VCol>
+    <!--    <VCol -->
+    <!--      cols="12" -->
+    <!--      md="4" -->
+    <!--    > -->
+    <!--      <CrmAnalyticsSales /> -->
+    <!--    </VCol> -->
 
     <!-- 👉 Active timeline -->
-    <VCol
-      cols="12"
-      md="6"
-    >
-      <CrmActivityTimeline />
-    </VCol>
+    <!--    <VCol -->
+    <!--      cols="12" -->
+    <!--      md="6" -->
+    <!--    > -->
+    <!--      <CrmActivityTimeline /> -->
+    <!--    </VCol> -->
   </VRow>
 </template>

@@ -79,9 +79,9 @@ const chartOptions = {
   <VCard>
     <VCardText class="pb-2">
       <h6 class="text-h6">
-        Sales
+        Tiền quảng cáo tháng này
       </h6>
-      <span class="text-body-2">Last Year</span>
+      <!--      <span class="text-body-2">Last Year</span> -->
     </VCardText>
 
     <VueApexCharts
@@ -93,7 +93,7 @@ const chartOptions = {
     <VCardText class="pt-0">
       <div class="d-flex align-center justify-space-between mt-3">
         <h6 class="text-h6 text-center font-weight-semibold">
-          175k
+          175,000 VND
         </h6>
         <span class="text-sm text-error">
           -16.2%

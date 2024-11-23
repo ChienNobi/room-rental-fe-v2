@@ -23,7 +23,7 @@ export default class BaseCurlApi {
     return request.post(this.baseUrl, data)
   }
 
-  update(id: number, data: unknown): Promise<AxiosResponse> {
+  update(id: number | string, data: unknown): Promise<AxiosResponse> {
     return request.put(`${this.baseUrl}/${id}`, data)
   }
 

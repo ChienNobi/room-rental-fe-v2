@@ -2,7 +2,7 @@
 import { AxiosError } from 'axios'
 import { integerValidator, phoneNumberValidator, requiredValidator } from '@validators'
 import type { PostStatus } from '@/constants/common'
-import { FURNITURE_TYPES, POST_STATUSES, ROOM_TYPES } from '@/constants/common'
+import { FURNITURE_TYPES, HTTP_STATUS, POST_STATUSES, ROOM_TYPES } from '@/constants/common'
 
 import { useUserStore as userStore } from '@/pinia/userStore'
 import { getCities, getDistricts, getWards } from '@/api/common'
@@ -11,7 +11,6 @@ import { useSnackbar } from '@core/components/Snackbar/useSnackbar'
 
 const userInfo = userStore.userInfo
 const { successNotify, errorNotify } = useSnackbar()
-const { t } = useI18n()
 
 const cities = ref([])
 const districts = ref([])
@@ -39,6 +38,8 @@ const post = reactive({
   water_fee: '',
   internet_fee: '',
   extra_fee: '',
+
+  images: [],
 
   contact_name: userInfo.name,
   contact_phone: userInfo.phone,
@@ -76,13 +77,13 @@ const changeDistrict = async () => {
 }
 
 const router = useRouter()
+const route = useRoute()
+const id = route.params.id as string
 
 const savePost = async (status: PostStatus) => {
   try {
-    const images = ['https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Golden_tabby_and_white_kitten_n01.jpg/1200px-Golden_tabby_and_white_kitten_n01.jpg']
-
-    await postApi.save({ ...post, status, images, lat: '1', lon: '2' })
-    successNotify('Thêm mới bài đăng thành công')
+    await postApi.update(id, { ...post, status, lat: '1', lon: '2' })
+    successNotify('Chỉnh sửa bài đăng thành công')
     await router.push({ name: 'post' })
   }
   catch (e) {
@@ -91,6 +92,16 @@ const savePost = async (status: PostStatus) => {
   }
 }
 
+const getPostById = async () => {
+  const result = await postApi.getById(id)
+
+  if (result.status === HTTP_STATUS.OK) {
+    Object.assign(post, result.data)
+    post.images = JSON.parse(post.images)
+  }
+}
+
+getPostById()
 getCitiesList()
 </script>
 
@@ -99,14 +110,12 @@ getCitiesList()
     <div class="d-flex flex-wrap justify-start justify-sm-space-between gap-y-4 gap-x-6 mb-4">
       <div class="d-flex flex-column justify-center">
         <h4 class="text-h4 font-weight-medium">
-          Đăng tin
+          Chỉnh sửa tin
         </h4>
       </div>
 
       <div class="d-flex gap-4 align-center flex-wrap">
-        <VBtn variant="tonal" color="secondary" @click="router.push({ name: 'post' })">Hủy</VBtn>
-        <VBtn variant="tonal" color="primary" @click="savePost(POST_STATUSES.DRAFT)">Lưu nháp</VBtn>
-        <VBtn @click="savePost(POST_STATUSES.PUBLISH)">Đăng bài</VBtn>
+        <VBtn @click="savePost(POST_STATUSES.PUBLISH)">Chỉnh sửa</VBtn>
       </div>
     </div>
 
@@ -322,32 +331,6 @@ getCitiesList()
   </div>
 </template>
 
-<style lang="scss" scoped>
-.drop-zone {
-  border: 2px dashed rgba(var(--v-theme-on-surface), 0.12);
-  border-radius: 6px;
-}
-</style>
-
-<style lang="scss">
-.inventory-card {
-  .v-tabs.v-tabs-pill {
-    .v-slide-group-item--active.v-tab--selected.text-primary {
-      h6 {
-        color: #fff !important;
-      }
-    }
-  }
-
-  .v-radio-group,
-  .v-checkbox {
-    .v-selection-control {
-      align-items: start !important;
-    }
-
-    .v-label.custom-input {
-      border: none !important;
-    }
-  }
-}
-</style>
+<route lang="yaml">
+name: post-edit
+</route>

@@ -61,11 +61,48 @@ export const FURNITURE_TYPES = [
   },
 ]
 
+export const ROLES = [
+  {
+    title: 'User',
+    value: 'USER',
+  },
+  {
+    title: 'Admin',
+    value: 'ADMIN',
+  },
+]
+
 export const POST_STATUSES = {
   PENDING: 'PENDING',
   PUBLISH: 'PUBLISH',
   DRAFT: 'DRAFT',
   REJECTED: 'REJECTED',
+}
+
+export const POST_STATUS_TEXTS = [
+  {
+    status: 'PENDING',
+    text: 'Chờ duyệt',
+  },
+  {
+    status: 'PUBLISH',
+    text: 'Đã đăng',
+  },
+  {
+    status: 'DRAFT',
+    text: 'Nháp',
+  },
+  {
+    status: 'REJECTED',
+    text: 'Từ chối',
+  },
+]
+
+export const POST_STATUS_COLORS = {
+  PENDING: 'warning',
+  PUBLISH: 'success',
+  DRAFT: 'primary',
+  REJECTED: 'error',
 }
 
 export type PostStatus = keyof typeof POST_STATUSES
