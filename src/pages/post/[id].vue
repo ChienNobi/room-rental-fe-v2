@@ -97,7 +97,7 @@ const getPostById = async () => {
 
   if (result.status === HTTP_STATUS.OK) {
     Object.assign(post, result.data)
-    post.images = JSON.parse(post.images)
+    post.images = JSON.parse(result.data.images as string)
   }
 }
 

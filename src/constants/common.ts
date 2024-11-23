@@ -72,6 +72,17 @@ export const ROLES = [
   },
 ]
 
+export const USER_STATUSES = [
+  {
+    title: 'Active',
+    value: 1,
+  },
+  {
+    title: 'Inactive',
+    value: 0,
+  },
+]
+
 export const POST_STATUSES = {
   PENDING: 'PENDING',
   PUBLISH: 'PUBLISH',

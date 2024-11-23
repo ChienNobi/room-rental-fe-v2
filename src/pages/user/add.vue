@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { AxiosError } from 'axios'
 import { emailValidator, phoneNumberValidator, requiredValidator } from '@validators'
-import type { PostStatus } from '@/constants/common'
-import { FURNITURE_TYPES, POST_STATUSES, ROLES } from '@/constants/common'
+import { ROLES, USER_STATUSES } from '@/constants/common'
 
-import { postApi } from '@/api/post.api'
 import { useSnackbar } from '@core/components/Snackbar/useSnackbar'
+import { register } from '@/api/auth'
 
 const { successNotify, errorNotify } = useSnackbar()
+const router = useRouter()
 
 const user = reactive({
   name: '',
@@ -16,21 +16,23 @@ const user = reactive({
   password: '',
   address: '',
   confirm_password: '',
+  is_active: USER_STATUSES[0].value,
 })
 
-const router = useRouter()
+const rePasswordValidator = (value: string) => {
+  return (user.password && value === user.password) || 'Passwords do not match'
+}
 
-const savePost = async (status: PostStatus) => {
+const savePost = async () => {
   try {
-    const images = ['https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Golden_tabby_and_white_kitten_n01.jpg/1200px-Golden_tabby_and_white_kitten_n01.jpg']
+    await register({ ...user, is_active: true })
 
-    await postApi.save({ ...user, status, images, lat: '1', lon: '2' })
-    successNotify('Thêm mới bài đăng thành công')
-    await router.push({ name: 'post' })
+    successNotify('Thêm mới tài khoản thành công')
+    await router.push({ name: 'user' })
   }
   catch (e) {
     if (e instanceof AxiosError)
-      errorNotify(e.message || e.response?.data?.message)
+      errorNotify(e.response?.data?.message || e.message)
   }
 }
 </script>
@@ -45,7 +47,7 @@ const savePost = async (status: PostStatus) => {
       </div>
 
       <div class="d-flex gap-4 align-center flex-wrap">
-        <VBtn @click="savePost(POST_STATUSES.PUBLISH)">Lưu</VBtn>
+        <VBtn @click="savePost">Lưu</VBtn>
       </div>
     </div>
 
@@ -61,7 +63,7 @@ const savePost = async (status: PostStatus) => {
               class="mb-4"
             />
             <AppTextField
-              v-model="user.title"
+              v-model="user.email"
               label="Email"
               :rules="[requiredValidator, emailValidator]"
               placeholder="user@gmail.com"
@@ -79,6 +81,7 @@ const savePost = async (status: PostStatus) => {
 
             <AppTextarea
               v-model="user.address"
+              :rules="[requiredValidator]"
               label="Địa chỉ"
               class="mb-4"
             />
@@ -93,9 +96,9 @@ const savePost = async (status: PostStatus) => {
             />
 
             <AppTextField
-              v-model="user.confir_password"
+              v-model="user.confirm_password"
               label="Nhập lại mật khẩu"
-              :rules="[requiredValidator]"
+              :rules="[requiredValidator, rePasswordValidator]"
               placeholder=""
               class="mb-4"
               type="password"
@@ -108,6 +111,15 @@ const savePost = async (status: PostStatus) => {
               :rules="[requiredValidator]"
               :items="ROLES"
               prepend-inner-icon="mdi-account-group"
+              class="mb-4"
+            />
+
+            <AppSelect
+              v-model="user.is_active"
+              placeholder="Trạng thái"
+              label="Trạng thái"
+              :items="USER_STATUSES"
+              :rules="[requiredValidator]"
               class="mb-4"
             />
           </VCardText>

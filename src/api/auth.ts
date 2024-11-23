@@ -10,6 +10,7 @@ interface RegisterRequest {
   email: string
   password: string
   avt?: string
+  is_active?: boolean
 }
 
 export const login = (data: LoginRequest) => {
@@ -30,4 +31,16 @@ export const activeAccount = (token: string) => {
 
 export const profile = () => {
   return request.get('api_admin/profile')
+}
+
+export const getUsers = (params: Record<string, any>) => {
+  return request.get('api_admin/users', { params })
+}
+
+export const getUserById = (id: number | string) => {
+  return request.get(`api_admin/users/${id}`)
+}
+
+export const updateUser = (id: number | string, data: Record<string, any>) => {
+  return request.put(`api_admin/users/${id}`, data)
 }

@@ -1,31 +1,32 @@
 <script lang="ts" setup>
-import { formatCurrency, formatDate } from '@core/utils/formatters'
-import { postApi } from '@/api/post.api'
-import { POST_STATUS_COLORS, POST_STATUS_TEXTS } from '@/constants/common'
-import { requiredValidator } from '@validators'
+import { USER_STATUSES } from '@/constants/common'
+import { getUsers } from '@/api/auth'
 
-const transactions = ref([])
+const users = ref([])
 const { t } = useI18n()
 const router = useRouter()
 
 const formData = reactive({
   page: 1,
   limit: 10,
-  status: '',
+  is_active: '',
+  name: '',
 })
 
 const headers = [
   { title: 'Id', align: 'start', key: 'id' },
-  { title: 'Họ và tên', align: 'center', key: 'title' },
-  { title: 'Trạng thái', align: 'center', key: 'status' },
-  { title: 'Role', align: 'center', key: 'created_at' },
+  { title: 'Họ và tên', align: 'center', key: 'name' },
+  { title: 'Số điện thoại', align: 'center', key: 'phone' },
+  { title: 'Email', align: 'center', key: 'email' },
+  { title: 'Trạng thái', align: 'center', key: 'is_active' },
+  { title: 'Role', align: 'center', key: 'role' },
   { title: t('common.action'), align: 'center', key: 'action' },
 ]
 
 const getList = async () => {
-  const result = await postApi.get({ ...formData })
+  const result = await getUsers({ ...formData })
 
-  transactions.value = result.data.data ?? []
+  users.value = result.data.data ?? []
 }
 
 const onLimitChange = (limit: number) => {
@@ -33,7 +34,7 @@ const onLimitChange = (limit: number) => {
   getList()
 }
 
-// getList()
+getList()
 </script>
 
 <template>
@@ -54,13 +55,11 @@ const onLimitChange = (limit: number) => {
         </VCol>
         <VCol :md="4" :sm="12">
           <VSelect
-            v-model="formData.status"
+            v-model="formData.is_active"
             density="compact"
             variant="outlined"
             label="Trạng thái"
-            item-title="text"
-            item-value="status"
-            :items="POST_STATUS_TEXTS"
+            :items="USER_STATUSES"
             clearable
           />
         </VCol>
@@ -70,22 +69,21 @@ const onLimitChange = (limit: number) => {
         </VCol>
       </VRow>
 
-      <VDataTable :headers="headers" :items="transactions" @update:items-per-page="onLimitChange">
-        <template #item.created_at="{ item }">{{ formatDate(item.created_at) }}</template>
-        <template #item.status="{ item }">
+      <VDataTable :headers="headers" :items="users" @update:items-per-page="onLimitChange">
+        <template #item.is_active="{ item }">
           <VChip
             class="me-3"
-            :color="POST_STATUS_COLORS[item.status]"
+            :color="item.is_active ? 'success' : 'error'"
             size="small"
           >
-            {{ item.status }}
+            {{ item.is_active ? 'Active' : 'Inactive' }}
           </VChip>
         </template>
 
         <template #item.action="{ item }">
           <VBtn
             color="primary" size="x-small" prepend-icon="tabler-pencil"
-            @click="router.push({ name: 'post-edit', params: { id: item.id } })"
+            @click="router.push({ name: 'user-edit', params: { id: item.id } })"
           >
             {{ t('btn.edit') }}
           </VBtn>

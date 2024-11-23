@@ -29,6 +29,10 @@ const registerData = reactive({
   privacyPolicies: false,
 })
 
+const rePasswordValidator = (value: string) => {
+  return (registerData.password && value === registerData.password) || 'Passwords do not match'
+}
+
 const isPasswordVisible = ref<boolean>(false)
 const imageRef = ref()
 
