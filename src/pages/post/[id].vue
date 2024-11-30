@@ -44,6 +44,8 @@ const post = reactive({
   contact_name: userInfo.name,
   contact_phone: userInfo.phone,
   contact_email: userInfo.email,
+
+  status: POST_STATUSES.DRAFT,
 })
 
 const getCitiesList = async () => {
@@ -222,6 +224,19 @@ getCitiesList()
               :rules="[requiredValidator, phoneNumberValidator]"
               label="Số điện thoại"
               placeholder="Số điện thoại liên hệ"
+              class="mb-4"
+            />
+          </VCardText>
+        </VCard>
+
+        <VCard title="Trạng thái" class="mb-4">
+          <VCardText>
+            <AppSelect
+              v-model="post.status"
+              placeholder="Chọn trạng thái"
+              label="Trạng thái bài viết"
+              :rules="[requiredValidator]"
+              :items="Object.values(POST_STATUSES)"
               class="mb-4"
             />
           </VCardText>

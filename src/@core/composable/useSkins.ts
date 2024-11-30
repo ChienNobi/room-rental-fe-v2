@@ -1,7 +1,6 @@
 import { VThemeProvider } from 'vuetify/components'
 import { AppContentLayoutNav } from '@layouts/enums'
 
-// TODO: Use `VThemeProvider` from dist instead of lib (Using this component from dist causes navbar to loose sticky positioning)
 import { useThemeConfig } from '@core/composable/useThemeConfig'
 
 export const useSkins = () => {

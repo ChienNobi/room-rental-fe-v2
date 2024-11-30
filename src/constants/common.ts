@@ -84,10 +84,11 @@ export const USER_STATUSES = [
 ]
 
 export const POST_STATUSES = {
-  PENDING: 'PENDING',
+  // PENDING: 'PENDING',
   PUBLISH: 'PUBLISH',
   DRAFT: 'DRAFT',
-  REJECTED: 'REJECTED',
+
+  // REJECTED: 'REJECTED',
 }
 
 export const POST_STATUS_TEXTS = [
