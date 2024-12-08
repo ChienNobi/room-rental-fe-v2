@@ -103,8 +103,10 @@ const getPostById = async () => {
   }
 }
 
-getPostById()
 getCitiesList()
+getDistrictList()
+getWardList()
+getPostById()
 </script>
 
 <template>
@@ -117,7 +119,7 @@ getCitiesList()
       </div>
 
       <div class="d-flex gap-4 align-center flex-wrap">
-        <VBtn @click="savePost(POST_STATUSES.PUBLISH)">Chỉnh sửa</VBtn>
+        <VBtn @click="savePost(POST_STATUSES.PENDING)">Chỉnh sửa</VBtn>
       </div>
     </div>
 
@@ -125,6 +127,8 @@ getCitiesList()
       <VCol md="8">
         <VCard class="mb-4" title="Thông tin chung">
           <VCardText>
+            <ImageUpload ref="imageRef" class="mb-4" :url="post.images[0]" />
+
             <AppTextField
               v-model="post.title"
               label="Tiêu đề"

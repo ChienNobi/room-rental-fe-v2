@@ -278,6 +278,8 @@ declare module '@vue/runtime-core' {
     ErrorHeader: typeof import('./src/@core/components/ErrorHeader.vue')['default']
     I18n: typeof import('./src/@core/components/I18n.vue')['default']
     ImageUpload: typeof import('./src/@core/components/ImageUpload.vue')['default']
+    ImageUploader: typeof import('./src/@core/components/ImageUploader/index.vue')['default']
+    ImageUploadMulti: typeof import('./src/@core/components/ImageUploadMulti.vue')['default']
     LoadingProvider: typeof import('./src/@core/components/Loading/LoadingProvider.vue')['default']
     MceEditor: typeof import('./src/@core/app-form-elements/MceEditor.vue')['default']
     Notifications: typeof import('./src/@core/components/Notifications.vue')['default']

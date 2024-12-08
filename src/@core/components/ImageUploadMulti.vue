@@ -3,33 +3,40 @@ import { upload as uploadImage } from '@/plugins/firebase/firebase'
 
 interface Props {
   rounded?: boolean
-  url?: string
+  urls?: string[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
   rounded: false,
-  url: '',
+  urls: () => [],
 })
 
 const fileInput = ref<HTMLElement>()
-const imageUrl = ref<string | null>('')
-const selectedFile = ref<File | null>(null)
+const imageUrls = ref<string[]>([])
+const selectedFiles = ref<File[]>([])
 const zoomOut = ref<boolean>(false)
 
-watch(() => props.url, url => {
-  if (url)
-    imageUrl.value = url
+watch(() => props.urls, urls => {
+  if (urls)
+    imageUrls.value = urls
 })
 
-const upload = async (folder = 'images'): Promise<string> => {
-  if (imageUrl.value?.startsWith('https'))
-    return imageUrl.value
+const upload = async (folder = 'images'): Promise<string[]> => {
+  const notNeedUpload = []
 
-  let imageUploadedUrl = ''
-  if (selectedFile.value)
-    imageUploadedUrl = await uploadImage(selectedFile.value, folder)
+  for (const url of imageUrls.value) {
+    if (url.startsWith('https'))
+      notNeedUpload.push(url)
+  }
 
-  return imageUploadedUrl
+  const imageUploadedUrl = []
+  for (const file of selectedFiles.value) {
+    const url = await uploadImage(file, folder)
+
+    imageUploadedUrl.push(url)
+  }
+
+  return [...notNeedUpload, ...imageUploadedUrl]
 }
 
 const previewImage = (e: Event) => {
@@ -86,7 +93,9 @@ defineExpose({
   </div>
 
   <VDialog v-model="zoomOut" width="50%">
-    <VImg :src="imageUrl as string" />
+    <div style="max-height: 90vh;">
+      <VImg :src="imageUrl as string" />
+    </div>
     <VBtn class="icon--close" @click="() => zoomOut = false">Close</VBtn>
   </VDialog>
 </template>

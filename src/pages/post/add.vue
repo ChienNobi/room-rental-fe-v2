@@ -45,6 +45,8 @@ const post = reactive({
   contact_email: userInfo.email,
 })
 
+const imageRef = ref()
+
 const getCitiesList = async () => {
   const res = await getCities()
 
@@ -79,7 +81,7 @@ const router = useRouter()
 
 const savePost = async (status: PostStatus) => {
   try {
-    const images = ['https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Golden_tabby_and_white_kitten_n01.jpg/1200px-Golden_tabby_and_white_kitten_n01.jpg']
+    const images = [await imageRef.value.upload('avt')]
 
     await postApi.save({ ...post, status, images, lat: '1', lon: '2' })
     successNotify('Thêm mới bài đăng thành công')
@@ -106,7 +108,7 @@ getCitiesList()
       <div class="d-flex gap-4 align-center flex-wrap">
         <VBtn variant="tonal" color="secondary" @click="router.push({ name: 'post' })">Hủy</VBtn>
         <VBtn variant="tonal" color="primary" @click="savePost(POST_STATUSES.DRAFT)">Lưu nháp</VBtn>
-        <VBtn @click="savePost(POST_STATUSES.PUBLISH)">Đăng bài</VBtn>
+        <VBtn @click="savePost(POST_STATUSES.PENDING)">Đăng bài</VBtn>
       </div>
     </div>
 
@@ -114,6 +116,8 @@ getCitiesList()
       <VCol md="8">
         <VCard class="mb-4" title="Thông tin chung">
           <VCardText>
+            <ImageUpload ref="imageRef" class="mb-4" />
+
             <AppTextField
               v-model="post.title"
               label="Tiêu đề"

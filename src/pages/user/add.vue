@@ -42,7 +42,7 @@ const savePost = async () => {
     <div class="d-flex flex-wrap justify-start justify-sm-space-between gap-y-4 gap-x-6 mb-4">
       <div class="d-flex flex-column justify-center">
         <h4 class="text-h4 font-weight-medium">
-          Thêm mới user
+          Thêm mới người dùng
         </h4>
       </div>
 

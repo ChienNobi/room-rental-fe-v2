@@ -15,9 +15,9 @@ const formData = reactive({
 
 const headers = [
   { title: 'Id', align: 'start', key: 'id' },
-  { title: 'Title', align: 'center', key: 'title' },
+  { title: 'Title', key: 'title' },
   { title: 'Ảnh', align: 'center', key: 'amount' },
-  { title: 'Tiền thuê phòng', align: 'center', key: 'rent_fee', value: (item: Record<string, any>) => formatCurrency(item.rent_fee) },
+  { title: 'Tiền thuê phòng', align: 'center', key: 'rent_fee', value: (item: Record<string, string>) => formatCurrency(item.rent_fee) },
   { title: 'Trạng thái', align: 'center', key: 'status' },
   { title: 'Ngày đăng', align: 'center', key: 'created_at' },
   { title: t('common.action'), align: 'center', key: 'action' },

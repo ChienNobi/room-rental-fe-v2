@@ -115,7 +115,7 @@ const onSubmit = async (validate: SubmitEventPromise) => {
           >
             <div class="mb-4">
               <ImageUpload ref="imageRef" rounded class="mb-2" />
-              <p class="text-x">Upload your avt here</p>
+              <p class="text-x">Ảnh của bạn</p>
             </div>
 
             <VTextField

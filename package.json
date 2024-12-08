@@ -12,8 +12,6 @@
   "dependencies": {
     "@casl/ability": "^6.2.0",
     "@casl/vue": "^2.2.0",
-    "@cloudinary/url-gen": "^1.21.0",
-    "@cloudinary/vue": "^1.13.0",
     "@floating-ui/dom": "1.0.4",
     "@tabler/icons": "^1.97.0",
     "@tinymce/tinymce-vue": "^5.1.1",
