@@ -46,6 +46,7 @@ const post = reactive({
 })
 
 const imageRef = ref()
+const loading = ref<boolean>(false)
 
 const getCitiesList = async () => {
   const res = await getCities()
@@ -81,7 +82,9 @@ const router = useRouter()
 
 const savePost = async (status: PostStatus) => {
   try {
-    const images = [await imageRef.value.upload('avt')]
+    loading.value = true
+
+    const images = await imageRef.value.upload('images')
 
     await postApi.save({ ...post, status, images, lat: '1', lon: '2' })
     successNotify('Thêm mới bài đăng thành công')
@@ -90,6 +93,9 @@ const savePost = async (status: PostStatus) => {
   catch (e) {
     if (e instanceof AxiosError)
       errorNotify(e.message || e.response?.data?.message)
+  }
+  finally {
+    loading.value = false
   }
 }
 
@@ -107,8 +113,8 @@ getCitiesList()
 
       <div class="d-flex gap-4 align-center flex-wrap">
         <VBtn variant="tonal" color="secondary" @click="router.push({ name: 'post' })">Hủy</VBtn>
-        <VBtn variant="tonal" color="primary" @click="savePost(POST_STATUSES.DRAFT)">Lưu nháp</VBtn>
-        <VBtn @click="savePost(POST_STATUSES.PENDING)">Đăng bài</VBtn>
+        <VBtn :loading="loading" variant="tonal" color="primary" @click="savePost(POST_STATUSES.DRAFT)">Lưu nháp</VBtn>
+        <VBtn :loading="loading" @click="savePost(POST_STATUSES.PENDING)">Đăng bài</VBtn>
       </div>
     </div>
 
@@ -116,7 +122,7 @@ getCitiesList()
       <VCol md="8">
         <VCard class="mb-4" title="Thông tin chung">
           <VCardText>
-            <ImageUpload ref="imageRef" class="mb-4" />
+            <ImageUploadMulti ref="imageRef" />
 
             <AppTextField
               v-model="post.title"

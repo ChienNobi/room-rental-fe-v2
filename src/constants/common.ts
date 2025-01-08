@@ -53,7 +53,7 @@ export const FURNITURE_TYPES = [
   },
   {
     title: 'Cơ bản',
-    value: 'BASIC',
+    value: 'PART',
   },
   {
     title: 'Đầy đủ',

@@ -9,6 +9,7 @@ import router from '@/router'
 import '@core/scss/template/index.scss'
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
+import './assets/css/tailwind.css'
 
 loadFonts()
 

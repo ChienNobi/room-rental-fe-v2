@@ -81,16 +81,25 @@ const changeDistrict = async () => {
 const router = useRouter()
 const route = useRoute()
 const id = route.params.id as string
+const imageRef = ref()
+const loading = ref<boolean>(false)
 
 const savePost = async (status: PostStatus) => {
   try {
-    await postApi.update(id, { ...post, status, lat: '1', lon: '2' })
+    loading.value = true
+
+    const images = await imageRef.value.upload('images')
+
+    await postApi.update(id, { ...post, status, lat: '1', lon: '2', images })
     successNotify('Chỉnh sửa bài đăng thành công')
     await router.push({ name: 'post' })
   }
   catch (e) {
     if (e instanceof AxiosError)
       errorNotify(e.message || e.response?.data?.message)
+  }
+  finally {
+    loading.value = false
   }
 }
 
@@ -119,7 +128,7 @@ getPostById()
       </div>
 
       <div class="d-flex gap-4 align-center flex-wrap">
-        <VBtn @click="savePost(POST_STATUSES.PENDING)">Chỉnh sửa</VBtn>
+        <VBtn :loading="loading" @click="savePost(POST_STATUSES.PENDING)">Chỉnh sửa</VBtn>
       </div>
     </div>
 
@@ -127,7 +136,7 @@ getPostById()
       <VCol md="8">
         <VCard class="mb-4" title="Thông tin chung">
           <VCardText>
-            <ImageUpload ref="imageRef" class="mb-4" :url="post.images[0]" />
+            <ImageUploadMulti ref="imageRef" class="mb-4" :urls="post.images" />
 
             <AppTextField
               v-model="post.title"

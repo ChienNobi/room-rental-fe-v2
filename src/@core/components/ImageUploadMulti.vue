@@ -13,65 +13,51 @@ const props = withDefaults(defineProps<Props>(), {
 
 const fileInput = ref<HTMLElement>()
 const imageUrls = ref<string[]>([])
-const selectedFiles = ref<File[]>([])
-const zoomOut = ref<boolean>(false)
+const rawFile = ref<File[]>([])
 
 watch(() => props.urls, urls => {
-  if (urls)
-    imageUrls.value = urls
+  if (urls && urls.length)
+    imageUrls.value = [...urls]
 })
-
-const upload = async (folder = 'images'): Promise<string[]> => {
-  const notNeedUpload = []
-
-  for (const url of imageUrls.value) {
-    if (url.startsWith('https'))
-      notNeedUpload.push(url)
-  }
-
-  const imageUploadedUrl = []
-  for (const file of selectedFiles.value) {
-    const url = await uploadImage(file, folder)
-
-    imageUploadedUrl.push(url)
-  }
-
-  return [...notNeedUpload, ...imageUploadedUrl]
-}
 
 const previewImage = (e: Event) => {
   const target = e.target as HTMLInputElement
 
-  selectedFile.value = (target.files as FileList)[0]
+  const files = target.files as FileList
 
-  if (selectedFile.value) {
+  rawFile.value = [...rawFile.value, ...files]
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i]
     const reader = new FileReader()
 
     reader.onload = (evt: ProgressEvent<FileReader>) => {
       if (evt.target && typeof evt.target.result === 'string')
-        imageUrl.value = evt.target.result
+        imageUrls.value.push(evt.target.result)
     }
 
-    reader.readAsDataURL(selectedFile.value)
-
-    return
+    reader.readAsDataURL(file)
   }
-  selectedFile.value = null
 }
 
-const removeImage = (e: Event) => {
-  e.stopPropagation()
-  imageUrl.value = null
-  selectedFile.value = null
-}
+const upload = async (folder = 'images'): Promise<string[]> => {
+  const uploadedUrl = []
+  for (const file of rawFile.value) {
+    const url = await uploadImage(file, folder)
 
-const zoomImage = (e: Event) => {
-  e.stopPropagation()
-  zoomOut.value = true
+    uploadedUrl.push(url)
+  }
+
+  return [...props.urls, ...uploadedUrl]
 }
 
 const handleClick = () => {
   fileInput.value?.click()
+}
+
+const removeImage = (index: number) => {
+  imageUrls.value.splice(index, 1)
+  rawFile.value.splice(index, 1)
 }
 
 defineExpose({
@@ -80,24 +66,27 @@ defineExpose({
 </script>
 
 <template>
-  <div class="upload-picture" :class="{ 'rounded-50': props.rounded }" v-bind="$attrs" @click="handleClick">
-    <div v-if="imageUrl" class="upload-picture--cover">
-      <div class="upload-picture--tool d-flex" :class="{ 'rounded-50': props.rounded }">
-        <VIcon icon="tabler-zoom-in" class="mr-1" title="zoom out" @click="zoomImage" />
-        <VIcon icon="tabler-circle-minus" title="remove" @click="removeImage" />
+  <section class="tw-flex tw-gap-2 tw-flex-wrap mb-4">
+    <div
+      v-for="(imgUrl, index) in imageUrls" v-bind="$attrs" :key="index" class="upload-picture"
+      :class="{ 'rounded-50': props.rounded }"
+    >
+      <div class="upload-picture--cover">
+        <div class="upload-picture--tool d-flex" :class="{ 'rounded-50': props.rounded }">
+          <!--          <VIcon icon="tabler-zoom-in" class="mr-1" title="zoom out" /> -->
+          <VIcon icon="tabler-circle-minus" title="remove" @click="removeImage(index)" />
+        </div>
+        <img :src="imgUrl" alt="Selected Image" style="max-width: 100%; max-height: 100%;" :style="props.rounded ? 'height: 100%; border-radius: 50%;' : ''">
       </div>
-      <img :src="imageUrl" alt="Selected Image" style="max-width: 100%; max-height: 100%;" :style="props.rounded ? 'height: 100%; border-radius: 50%;' : ''">
     </div>
-    <slot v-else name="icon"><VIcon icon="tabler-plus" /></slot>
-    <input ref="fileInput" type="file" accept="image/*" @change="previewImage">
-  </div>
-
-  <VDialog v-model="zoomOut" width="50%">
-    <div style="max-height: 90vh;">
-      <VImg :src="imageUrl as string" />
+    <div class="upload-picture" @click="handleClick">
+      <slot name="icon"><VIcon icon="tabler-plus" /></slot>
+      <input
+        ref="fileInput" type="file" accept="image/*" multiple
+        @change="previewImage"
+      >
     </div>
-    <VBtn class="icon--close" @click="() => zoomOut = false">Close</VBtn>
-  </VDialog>
+  </section>
 </template>
 
 <style lang="scss" scoped>
