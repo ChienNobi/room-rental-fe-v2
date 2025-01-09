@@ -1,5 +1,6 @@
 import type { Composer } from 'vue-i18n'
 import { isEmpty, isEmptyArray, isNullOrUndefined } from './index'
+import { formatCurrency } from '@core/utils/formatters'
 import i18n from '@/plugins/i18n'
 
 const i18nGlobal = i18n.global as Composer
@@ -67,9 +68,9 @@ export const minIntegerValidator = (value: unknown, min: number) => {
     return true
 
   if (Array.isArray(value))
-    return value.every(val => Number(val) >= min) || `The Min Number field must be at least ${min}`
+    return value.every(val => Number(val) >= min) || `Nhập vào số tiền tối thiểu ${formatCurrency(min)}`
 
-  return Number(value) >= min || `The Min Number field must be at least ${min}`
+  return Number(value) >= min || `Nhập vào số tiền tối thiểu ${formatCurrency(min)}`
 }
 
 // 👉 Regex Validator

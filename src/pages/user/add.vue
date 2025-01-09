@@ -125,56 +125,6 @@ const savePost = async () => {
           </VCardText>
         </VCard>
       </VCol>
-
-      <VCol md="4" cols="12">
-        <!-- 👉 Price -->
-        <!--        <VCard title="Thiết lập giá" class="mb-4"> -->
-        <!--          <VCardText> -->
-        <!--            <AppTextField -->
-        <!--              v-model="post.rent_fee" label="Giá thuê" -->
-        <!--              placeholder="20" -->
-        <!--              class="mb-4" -->
-        <!--              :rules="[requiredValidator, integerValidator]" -->
-        <!--              prepend-inner-icon="mdi-currency-usd" -->
-        <!--            /> -->
-
-        <!--            <AppTextField -->
-        <!--              v-model="post.electricity_fee" -->
-        <!--              label="Giá điện" -->
-        <!--              placeholder="5k/số" -->
-        <!--              class="mb-4" -->
-        <!--              prepend-inner-icon="mdi-lightning-bolt" -->
-        <!--              suffix="/số" -->
-        <!--              :rules="[integerValidator]" -->
-        <!--            /> -->
-
-        <!--            <AppTextField -->
-        <!--              v-model="post.water_fee" -->
-        <!--              label="Giá nước" -->
-        <!--              prepend-inner-icon="mdi-faucet" -->
-        <!--              suffix="/m³" -->
-        <!--              :rules="[integerValidator]" -->
-        <!--              class="mb-4" -->
-        <!--            /> -->
-
-        <!--            <AppTextField -->
-        <!--              v-model="post.internet_fee" -->
-        <!--              label="Cước internet" -->
-        <!--              prepend-inner-icon="mdi-web" -->
-        <!--              :rules="[integerValidator]" -->
-        <!--              class="mb-4" -->
-        <!--            /> -->
-
-        <!--            <AppTextField -->
-        <!--              v-model="post.extra_fee" -->
-        <!--              label="Phí dịch vụ" -->
-        <!--              prepend-inner-icon="mdi-account-wrench" -->
-        <!--              :rules="[integerValidator]" -->
-        <!--              class="mb-4" -->
-        <!--            /> -->
-        <!--          </VCardText> -->
-        <!--        </VCard> -->
-      </VCol>
     </VRow>
   </div>
 </template>

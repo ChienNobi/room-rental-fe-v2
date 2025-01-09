@@ -4,7 +4,7 @@ import { emailValidator, phoneNumberValidator, requiredValidator } from '@valida
 import { HTTP_STATUS, ROLES, USER_STATUSES } from '@/constants/common'
 
 import { useSnackbar } from '@core/components/Snackbar/useSnackbar'
-import { getUserById, register, updateUser } from '@/api/auth'
+import { getUserById, updateUser } from '@/api/auth'
 
 const { successNotify, errorNotify } = useSnackbar()
 const router = useRouter()
